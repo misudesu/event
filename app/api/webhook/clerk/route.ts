@@ -17,7 +17,7 @@ export async function POST(req: Request) {
   // Get the headers
   const headerPayload = headers();
   const svix_id = headerPayload.get("svix-id");
-  const svix_timestamp = headerPayload.get("svix-timestamp");
+  const svix_timestamp = headerPayload.get("svix-timestamp")?.toString();
   const svix_signature = headerPayload.get("svix-signature");
  
   // If there are no headers, error out
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
   try {
     evt = wh.verify(body, {
       "svix-id": svix_id,
-      "svix-timestamp": svix_timestamp,
+      "svix-timestamp": svix_timestamp.toString(),
       "svix-signature": svix_signature,
     }) as WebhookEvent
   } catch (err) {
