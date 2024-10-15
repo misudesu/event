@@ -38,8 +38,8 @@ type EventFormProps={
 
 export default function EventForm({type,userId, eventId }:EventFormProps) {
   const [files, setFiles] = useState<File[]>([])
-const {startUpload}=useUploadThing('imageUploader');
-const router = useRouter();
+  const {startUpload}=useUploadThing('imageUploader');
+  const router = useRouter();
 
     const initialValues=eventDefaultValues;
     const form = useForm<z.infer<typeof eventFormSchema>>({
@@ -62,14 +62,16 @@ const router = useRouter();
         }
     
         if(type === 'Create') {
-          
-          try {
-            const newEvent = await createEvent({
-                event: { ...values, imageUrl: uploadedImageUrl },
-                userId,
-                path: '/profile'
-            }) as unknown as Event
-    
+            console.log({ ...values, imageUrl: uploadedImageUrl })
+            try {
+                const newEvent = await createEvent({
+                    event: { ...values, imageUrl: uploadedImageUrl },
+                    userId,
+                    path: '/profile'
+                }) as unknown as Event
+                
+                console.log("misu");
+
             if(newEvent) {
               form.reset();
               router.push(`/events/${newEvent?._id}`)
