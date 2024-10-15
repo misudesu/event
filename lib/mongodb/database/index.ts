@@ -1,19 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from 'mongoose';
-
 const MONGODB_URI = process.env.MONGODB_URI;
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let cached 
-// eslint-disable-next-line prefer-const
-cached= (global as any).mongoose || { conn: null, promise: null };
-
-export const connectToDatabase = async () => {
+let cached = (global as any).mongoose || { conn: null, promise: null };
+export async function connectToDatabase(){
   if (cached.conn) return cached.conn;
 
   if(!MONGODB_URI) throw new Error('MONGODB_URI is missing');
 
-  cached.promise = cached.promise || mongoose.connect(MONGODB_URI, {
+  cached.promise = cached?.promise || mongoose?.connect(MONGODB_URI, {
     dbName: 'event',
     bufferCommands: false,
   })
