@@ -95,5 +95,5 @@ export const handleError = (error: unknown) => {
     (error instanceof Error && error.message) || 
     (typeof error === 'string' ? error : JSON.stringify(error));
 
-  throw new Error('Something went wrong while processing your request');
+  throw new Error(errorMessage);
 }

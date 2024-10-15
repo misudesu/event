@@ -1,10 +1,13 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { auth as clerkAuth } from '@clerk/nextjs/server';  // Import Clerk's auth function and alias it to avoid name conflict
+import { NextRequest } from "next/server";
+import { console } from "inspector";
 
 const f = createUploadthing();
 
-const getUserIdFromAuth = async (req: Request) => {
+const getUserIdFromAuth = async (req:NextRequest) => {
   const { sessionClaims } = clerkAuth(); // You need to pass req if required by Clerk's `auth`
+ console.log(req)
   const userId = sessionClaims?.userId as string;
   if (userId) {
     return { id: userId };

@@ -1,3 +1,4 @@
+'use client'
 import {
     Select,
     SelectContent,
@@ -47,8 +48,10 @@ import { Input } from "../input"
     useEffect(() => {
       const getCategories = async () => {
         const categoryList = await getAllCategories();
-  console.log("api response",categoryList)
-        categoryList && setCategories(categoryList as ICategory[])
+        if(categoryList){
+      setCategories(categoryList)
+        }
+       
       }
   
       getCategories();
@@ -77,7 +80,8 @@ import { Input } from "../input"
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={() => startTransition(handleAddCategory)}>Add</AlertDialogAction>
+                <AlertDialogAction onClick={() => startTransition(() => handleAddCategory())}>Add</AlertDialogAction>
+
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
