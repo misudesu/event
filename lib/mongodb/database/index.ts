@@ -13,7 +13,13 @@ const cached: MongooseCache = global.mongooseCache || { conn: null, promise: nul
 export async function connectToDatabase() {
   if (cached.conn) return cached.conn;
 
-  if (!MONGODB_URI) throw new Error('MONGODB_URI is missing');
+  // Log the MONGODB_URI to ensure it's loaded correctly
+  if (!MONGODB_URI) {
+    console.error("MONGODB_URI is missing in environment",MONGODB_URI);
+    throw new Error(MONGODB_URI);
+  } else {
+    console.log("MONGODB_URI found:", MONGODB_URI);
+  }
 
   if (!cached.promise) {
     cached.promise = mongoose.connect(MONGODB_URI, {
