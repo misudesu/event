@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
+import CategoryFilter from "@/components/ui/shared/CategoryFilter";
 import Collection from "@/components/ui/shared/Collection";
+import Search from "@/components/ui/shared/Search";
 import { getAllEvents } from "@/lib/actions/event.actions";
 import { SearchParamProps } from "@/types";
 import Image from "next/image";
@@ -39,11 +41,11 @@ Host,Connect, Celebrate:Your Event,Our Platform
 <h2 className="h2-bold">
 Trust by <br/> Thousands of Events
 </h2>
-<div className="flex-w-full flex-col gap-5 md:flex-row ">
-Search
 
-CategoryFilter
-</div>
+<div className="flex w-full flex-col gap-5 md:flex-row">
+          <Search />
+          <CategoryFilter />
+        </div>
 
 <Collection
           data={events?.data}
