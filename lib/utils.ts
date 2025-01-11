@@ -97,3 +97,37 @@ export const handleError = (error: unknown) => {
 
   throw new Error(errorMessage);
 }
+
+export function formatEventDates(startDateTime: Date | string, endDateTime: Date | string) {
+  try {
+    const start = new Date(startDateTime);
+    const end = new Date(endDateTime);
+
+    // Validate dates
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      throw new Error('Invalid date format');
+    }
+
+    const options: Intl.DateTimeFormatOptions = { 
+      month: "long" as const, 
+      day: "numeric" as const 
+    };
+
+    const startDateFormatted = new Intl.DateTimeFormat("en-US", options).format(start);
+    const endDateFormatted = new Intl.DateTimeFormat("en-US", options).format(end);
+
+    const sameMonth = start.getMonth() === end.getMonth();
+    const year = start.getFullYear();
+
+    return sameMonth
+      ? `${startDateFormatted.split(" ")[0]} ${startDateFormatted.split(" ")[1]} - ${endDateFormatted.split(" ")[1]}, ${year}`
+      : `${startDateFormatted} - ${endDateFormatted}, ${year}`;
+  } catch (error) {
+    console.error('Date formatting error:', error);
+    return 'Invalid date range';
+  }
+}
+
+export function  hasEventFinished(endDateTime:Date){
+  return new Date(endDateTime)< new Date();
+  }

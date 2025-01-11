@@ -1,15 +1,19 @@
 'use client'
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { getEventById } from "@/lib/actions/event.actions"
 import { getUserById } from "@/lib/actions/user.actions"
-import { SearchParamProps, CreateUserParams } from "@/types"
+import { formatEventDates, hasEventFinished } from "@/lib/utils"
+import {  CreateUserParams, BudgeParamProps, Event } from "@/types"
 import Image from "next/image"
 import {useEffect, useState } from "react"
 import { GiAirBalloon } from "react-icons/gi";
-export default function ConferencePage({ params: { id } }: SearchParamProps) {
+export default function ConferencePage({ params: { id,event} }: BudgeParamProps) {
   const [edit,setEdite]=useState<boolean>(false)
   const [user, setUser]=useState<CreateUserParams|null>(null)
+ const [eventDetails,setEvent]=useState<Event|null>(null)
   useEffect(()=>{
+
     const getUser= async()=>{
       if(!id) return;
       // const user= await getUserById(id);
@@ -18,27 +22,43 @@ export default function ConferencePage({ params: { id } }: SearchParamProps) {
       setUser(data)
     }
     getUser()
+const getEvent =async()=>{
+  if(!event) return;
+  const data= await getEventById(event);
+setEvent(data)
+}
+getEvent();
+  },[id,event])
 
-  },[id])
+  const EventFinished= hasEventFinished(eventDetails?.endDateTime as Date)
+
   return (
-    <div className="min-h-screen bg-black text-white">
+    
+    <div  style={{ backgroundImage: `url(${eventDetails?.imageUrl})` }} className="min-h-screen bg-black text-white ">
       {/* Header */}
-      <header className="flex justify-between items-center p-6">
+      <div className="absolute inset-x-0 inset-y-0 top-[70px] h-full bg-black bg-opacity-50"></div>
+  
+      <header className="relative  flex justify-between items-center p-6">
         <div className="flex items-center gap-3">
           <div className="bg-yellow-400 w-10 h-10 flex items-center justify-center">
             <span className="text-black text-2xl">∞</span>
           </div>
-          <span className="text-xl font-medium">devops.js</span>
-          <span className="text-gray-400 ml-4">The JavaScript DevOps Conference</span>
+          <span className="text-xl font-medium">{eventDetails?.title} </span>
+          <span className="text-gray-400 ml-4">organizer {eventDetails?.organizer.firstName}</span>
         </div>
-        <div className="text-xl">February 15 - 16, 2024</div>
+        <div className="text-xl"> {formatEventDates(eventDetails?.startDateTime as Date, eventDetails?.endDateTime as Date)} </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main className="relative grid grid-cols-2   mx-auto px-6 py-12">
+        {EventFinished?
         <h1 className="text-4xl text-center mb-16">
           Registration to the event is now closed.
-        </h1>
+        </h1>:
+       <p >
+{eventDetails?.description}
+       </p> 
+        }
 
         {/* Badge Card */}
         <div className="max-w-md mx-auto">
@@ -59,7 +79,7 @@ export default function ConferencePage({ params: { id } }: SearchParamProps) {
                   <div className="bg-yellow-400 w-6 h-6 flex items-center justify-center">
                     <span className="text-black text-xs">∞</span>
                   </div>
-                  <span className="text-white">devops.js</span>
+                  <span className="text-white">{eventDetails?.title} </span>
                 </div>
                 <span className="text-2xl text-white">#00706</span>
               </div>

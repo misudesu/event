@@ -147,3 +147,7 @@ export type CreateUserParams = {
     params: { id: string }
     searchParams: { [key: string]: string | string[] | undefined }
   }
+  export type BudgeParamProps = {
+    params: { id: string ,event:string}
+    searchParams: { [key: string]: string | string[] | undefined }
+  }
