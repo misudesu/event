@@ -131,3 +131,5 @@ export function formatEventDates(startDateTime: Date | string, endDateTime: Date
 export function  hasEventFinished(endDateTime:Date){
   return new Date(endDateTime)< new Date();
   }
+
+  

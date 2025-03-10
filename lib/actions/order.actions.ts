@@ -36,7 +36,7 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
       },
       mode: 'payment',
       // success_url:`${process.env.NEXT_PUBLIC_SERVER_URL}/profile`,
-      success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/budge/${order?.buyerId}/${order.eventId}`,
+      success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/budge/eml/${order?.buyerId}/${order.eventId}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/`,
     });
 
