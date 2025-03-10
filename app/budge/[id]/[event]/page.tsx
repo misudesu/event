@@ -22,6 +22,7 @@ export default function ConferencePage({ params: { id,event} }: BudgeParamProps)
       // const user= await getUserById(id);
       // console.log(user)
       const data= await getUserById(id);
+      console.log(data)
       setUser(data)
     }
     getUser()
@@ -34,7 +35,7 @@ getEvent();
   },[id,event])
 
 useEffect(()=>{
-  console.log(user_id.user?.primaryEmailAddress?.emailAddress===user?.email)
+  console.log(user_id?.user?.id)
   if(user_id.user?.primaryEmailAddress?.emailAddress === user?.email) {
     updateUser(user_id?.user?.id as string, {"username": userName} as UpdateUserParams)
   }
@@ -110,7 +111,7 @@ useEffect(()=>{
                     quality={100} 
                   />
                   :
-                  <p className=" rounded-full w-[96px] h-[96px] bg-slate-400 text-7xl text-white text-center ">{user?.username.charAt(0)}</p>
+                  <p className=" rounded-full w-[96px] h-[96px] bg-slate-400 text-7xl text-white text-center hidden md:block">{user?.username.charAt(0)}</p>
                   }
                   <div className="w-[50px] h-[50px] block md:hidden">
 {user?.photo?
@@ -125,7 +126,7 @@ useEffect(()=>{
   />
   :
 
-  <p className=" rounded-full w-full h-full bg-slate-400 text-4xl text-white text-center ">{user?.username.charAt(0)}</p>
+  <p className=" rounded-full w-full h-full bg-slate-400 text-4xl text-white text-center block md:hidden">{user?.username.charAt(0)}</p>
 }
   </div>
                 </div>

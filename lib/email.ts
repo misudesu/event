@@ -17,6 +17,6 @@ export async function sendEmail(to: string, subject: string, text: string) {
     text,
   }
   
-const respons=  await transporter.sendMail(mailOptions);
-return respons
+await transporter.sendMail(mailOptions);
+
 }

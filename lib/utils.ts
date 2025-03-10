@@ -94,7 +94,7 @@ export const handleError = (error: unknown) => {
   const errorMessage = 
     (error instanceof Error && error.message) || 
     (typeof error === 'string' ? error : JSON.stringify(error));
-
+console.log(errorMessage)
   throw new Error(errorMessage);
 }
 
