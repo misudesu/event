@@ -100,6 +100,7 @@ useEffect(()=>{
                
               <div className="flex  md:flex-row justify-center md:justify-start  items-center gap-6 py-5">
                 <div className="rounded-full ">
+                  { user?.photo?
                   <Image 
                     width={96} 
                     height={96} 
@@ -108,7 +109,11 @@ useEffect(()=>{
                     className="object-cover w-full h-full hidden md:block rounded-full" 
                     quality={100} 
                   />
+                  :
+                  <p className=" rounded-full w-[96px] h-[96px] bg-slate-400 text-7xl text-white text-center ">{user?.username.charAt(0)}</p>
+                  }
                   <div className="w-[50px] h-[50px] block md:hidden">
+{user?.photo?
 
 <Image 
     width={30} 
@@ -118,6 +123,10 @@ useEffect(()=>{
     className="object-cover w-full h-full md:hidden block rounded-full "  
     quality={100} 
   />
+  :
+
+  <p className=" rounded-full w-full h-full bg-slate-400 text-4xl text-white text-center ">{user?.username.charAt(0)}</p>
+}
   </div>
                 </div>
                 
