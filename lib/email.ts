@@ -18,4 +18,5 @@ export async function sendEmail(to: string, subject: string, text: string) {
   }
   
 const respons=  await transporter.sendMail(mailOptions);
+return respons
 }

@@ -7,7 +7,6 @@ import { formatEventDates, hasEventFinished } from "@/lib/utils"
 import {  CreateUserParams, BudgeParamProps, Event, UpdateUserParams } from "@/types"
 import { SignedIn, useUser } from "@clerk/nextjs"
 import Image from "next/image"
-import { useParams } from "next/navigation"
 import {useEffect, useState } from "react"
 import { GiAirBalloon } from "react-icons/gi";
 export default function ConferencePage({ params: { id,event} }: BudgeParamProps) {
