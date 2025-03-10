@@ -1,14 +1,13 @@
-'use client'
+
 import { IEvent } from '@/lib/mongodb/database/model/event.model'
-import { SignedIn, SignedOut, useUser } from '@clerk/nextjs'
+import { SignedIn, SignedOut } from '@clerk/nextjs'
 import React from 'react'
 import { Button } from '../button'
 import Link from 'next/link'
 import Checkout from './Checkout'
 
-const CheckoutButton = ({event}:{event:IEvent}) => {
-    const {user} =useUser();
-    const userId=user?.publicMetadata?.userId as string;
+const CheckoutButton = ({event,userId}:{event:IEvent,userId:string}) => {
+   
     const hasEventFinished=new Date(event.endDateTime)< new Date();
 
   return (

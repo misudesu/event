@@ -4,6 +4,7 @@ import { sendEmail } from "@/lib/email";
 import { BudgeParamProps } from "@/types"
 import { redirect } from "next/navigation"
 export default async function ConferencePage({ params: { id,event} }: BudgeParamProps) {
+  console.log(id,event)
     const data= await getUserById(id);
     if(data){
 
