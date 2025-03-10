@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect } from 'react'
  import { loadStripe } from '@stripe/stripe-js';
 import { IEvent } from '@/lib/mongodb/database/model/event.model';
@@ -18,7 +19,7 @@ const Checkout = ({ event, userId }: { event: IEvent, userId: string }) => {
       console.log('Order canceled -- continue to shop around and checkout when you’re ready.');
     }
   }, []);
-
+console.log(userId)
   const onCheckout = async () => {
     const order = {
       eventTitle: event.title,
