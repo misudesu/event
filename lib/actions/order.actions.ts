@@ -9,13 +9,15 @@ import { connectToDatabase } from '../mongodb/database';
 import Order from '../mongodb/database/model/order.model';
 import User from '../mongodb/database/model/user.model';
 import Event from '../mongodb/database/model/event.model';
+import { auth } from '@clerk/nextjs/server';
 
 
 export const checkoutOrder = async (order: CheckoutOrderParams) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
+ const { userId } = auth();
+  
   const price = order.isFree ? 0 : Number(order.price) * 100;
-
+console.log(userId)
   try {
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -32,11 +34,11 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
       ],
       metadata: {
         eventId: order.eventId,
-        buyerId: order.buyerId,
+        order_id: userId,
       },
       mode: 'payment',
       // success_url:`${process.env.NEXT_PUBLIC_SERVER_URL}/profile`,
-      success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/budge/eml/${order?.buyerId}/${order.eventId}`,
+      success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/budge/eml/${userId}/${order.eventId}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/`,
     });
 
