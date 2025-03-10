@@ -1,4 +1,4 @@
-
+'use client'
 import { IEvent } from '@/lib/mongodb/database/model/event.model'
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import React from 'react'
@@ -7,9 +7,7 @@ import Link from 'next/link'
 import Checkout from './Checkout'
 
 const CheckoutButton = ({event,userId}:{event:IEvent,userId:string}) => {
-   
-    const hasEventFinished=new Date(event.endDateTime)< new Date();
-
+  const hasEventFinished=new Date(event.endDateTime)< new Date();
   return (
     <div className="flex items-center gap-3">
     {hasEventFinished ? (
