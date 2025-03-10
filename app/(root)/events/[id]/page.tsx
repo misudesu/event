@@ -4,14 +4,14 @@ import Collection from '@/components/ui/shared/Collection';
 import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.actions'
 import { formatDateTime } from '@/lib/utils';
 import { SearchParamProps } from '@/types'
-import { useUser } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 import Image from 'next/image';
 
 const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) => {
   const event = await getEventById(id);
   // get userid from clerck user object
-  const {user} =useUser();
-    const userId=user?.publicMetadata?.userId as string;
+   const { sessionClaims } = auth();
+    const userId = sessionClaims?.userId as string;
 
   const relatedEvents = await getRelatedEventsByCategory({
     categoryId: event.category._id,
